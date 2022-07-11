@@ -29,7 +29,6 @@ public class CompareCSV {
 
             // Write exceptions to output file
             FileWriter fw = new FileWriter(args[2]);
-            BufferedWriter bw = new BufferedWriter(fw);
             for (String s : result) {
                 fw.write(s);
             }
