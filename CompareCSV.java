@@ -8,7 +8,7 @@ import java.util.ArrayList;
 public class CompareCSV {
     public static void main(String[] args) {
         if (args.length < 3) {
-            System.out.println("error");
+            System.out.println("Please input 3 filepaths. The first 2 should be the CSV files to read from. The last is the output file to be written to.");
             return;
         }
 
