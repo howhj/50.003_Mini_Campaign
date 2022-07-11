@@ -16,3 +16,6 @@ Replace `[input csv 1]`, `[input csv 2]`, `[output csv]` with your own file path
 This will compare the two input CSV files and write the exceptions to the output CSV file.
 
 Currently, the program can only compare the rightmost column of values. In future, this functionality will be expanded to any arbitrary column in the CSV.
+
+## Use case diagram
+![Use case diagram](use_case_diagram.jpg)
