@@ -1,0 +1,83 @@
+EQUIVALENCE PARTITIONING
+
+Input CSV filepaths
+- Valid (file exists)
+- Invalid 1 (file does not exist)
+- Invalid 2 (file is not a CSV file)
+
+Output CSV filepath (to prevent overwriting)
+- Valid (no such file exists)
+- Invalid 1 (file already exists)
+- Invalid 2 (bad filepath)
+
+Input CSV content
+- Valid (same number of entries per row)
+- Invalid (different number of entries per row)
+
+Integer index value (to choose which column to compare)
+- In bounds
+- Out of bounds
+
+========================================
+
+BOUNDARY VALUE ANALYSIS
+
+I will use examples to illustrate the values involving filepaths. For all of these examples, they consist of the following directories:
+/home/user/Documents -> containing 1.csv, 2.csv only
+/home/user/Downloads -> containing homework.pdf only
+There are no other directories in this hypothetical system.
+
+
+
+Valid input CSV filepaths (files exist)
+- Middle value: Documents/1.csv (if current directory is /home/user)
+- Boundary value: /home/user/Documents/1.csv (give full filepath from root)
+- Boundary value: 1.csv (if current directory is /home/user/Documents)
+
+Invalid input CSV filepaths 1 (files do not exist)
+- Middle value: /home/user/input/1.csv (no directory named input)
+- Boundary value: /home/user/Documents/1.csvb (typo by 1 letter)
+
+Invalid input CSV filepaths 2 (files are not CSV files)
+- Middle value: /home/user/Downloads/homework.pdf
+- Boundary value: . (a directory is not a file)
+
+
+
+Valid output CSV filepath (file does not exist)
+- Middle value: Documents/output.csv (if current directory is /home/user)
+- Boundary value: /home/user/Documents/output.csv (give full filepath from root)
+- Boundary value: q (save output as a file named q in current directory)
+
+Invalid output CSV filepath 1 (file already exists)
+- Middle value: /home/user/Documents/1.csv
+- Boundary value: homework.pdf (if Java executable is in /home/user/Downloads)
+
+Invalid output CSV filepath 2 (bad filepath)
+- Middle value: /home/user/output/output.csv (no subdirectory named output)
+- Boundary value: output/output.csv (no subdirectory named output in current directory)
+- Boundary value: . (a directory is not a file)
+
+
+
+Valid input CSV content (same number of data entries per row)
+- Middle value: all rows in both files contain the same number of entries (by counting commas that are not contained in quotes "")
+- Boundary value: no content in both files
+
+Invalid input CSV content (different number of data entries per row)
+- Middle value: 1.csv has 5 entries per row, while 2.csv has 6 entries per row
+- Boundary value: 1.csv has 3 entries per row, but line 3 in 1.csv has only 2 entries (e.g. line 2 is <1,"USD",50> and line 3 is <2,"USD,100">, so the comma is not counted)
+- Boundary value: 1.csv is empty but 2.csv contains data
+
+
+
+In bounds integer index value
+- Middle value: 3 (if 1.csv and 2.csv have 5 entries per row)
+- Boundary value: 0
+- Boundary value: N-1 (if 1.csv and 2.csv have N entries per row)
+
+Out of bounds integer index value
+- Middle value: -5
+- Middle value: 20 (if 1.csv and 2.csv have 5 entries per row)
+- Boundary value: -1
+- Boundary value: N (if 1.csv and 2.csv have N entries per row)
