@@ -22,7 +22,7 @@ public class nonParamUnitTests {
             List<String> actual = helper.ReadLines(path);
             assertTrue(validateList(expected, actual));
         }
-        catch(IOException e) { e.printStackTrace(); }
+        catch(IOException e) { fail("Unexpected error."); }
     }
 
     @Test
