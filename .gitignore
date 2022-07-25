@@ -1,3 +1,3 @@
-CompareCSV.class
 sample_file_?.csv
-out.csv
+junit-4.13.2.jar
+compareCSV/*.class
