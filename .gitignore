@@ -1,3 +1,4 @@
 sample_file_?.csv
-junit-4.13.2.jar
+stuff/*
 compareCSV/*.class
+resources/test*

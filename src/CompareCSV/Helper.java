@@ -1,61 +1,51 @@
-package compareCSV;
+package CompareCSV;
 
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.io.IOException;
 import java.util.List;
 import java.util.ArrayList;
- 
+
 // TODO: use switch case
-public class helper {
+public class Helper {
+    // Check number of columns by counting the number of unquoted commas
     public static int CheckBounds(List<String> in1, List<String> in2) {
-        int bounds1 = 0;
-        int bounds2 = 0;
-        int temp;
-        boolean quoted = false;
+        int bounds1 = CountCommas(in1.get(0));
+        int bounds2 = CountCommas(in2.get(0));
 
-        for (char c : in1.get(0).toCharArray()) {
-            if (c == ',' && !quoted) { bounds1++; }
-            else if (c == '"' && quoted) { quoted = false; }
-            else if (c == '"' && !quoted) { quoted = true; }
-            else if (c == '\n') { quoted = false; }
-        }
-
-        quoted = false;
-        for (char c : in2.get(0).toCharArray()) {
-            if (c == ',' && !quoted) { bounds2++; }
-            else if (c == '"' && quoted) { quoted = false; }
-            else if (c == '"' && !quoted) { quoted = true; }
-            else if (c == '\n') { quoted = false; }
-        }
-
+        // Different number of columns
         if (bounds1 != bounds2) { return -3; }
 
+        // Input file 1 does not have consistent number of columns in all rows
+        int temp;
         for (String s : in1) {
-            temp = 0;
-            quoted = false;
-            for (char c : s.toCharArray()) {
-                if (c == ',' && !quoted) { temp++; }
-                else if (c == '"' && quoted) { quoted = false; }
-                else if (c == '"' && !quoted) { quoted = true; }
-                else if (c == '\n') { quoted = false; }
-            }
+            temp = CountCommas(s);
             if (temp != bounds1) { return -1; }
         }
 
+        // Input file 2 does not have consistent number of columns in all rows
         for (String s : in2) {
-            temp = 0;
-            quoted = false;
-            for (char c : s.toCharArray()) {
-                if (c == ',' && !quoted) { temp++; }
-                else if (c == '"' && quoted) { quoted = false; }
-                else if (c == '"' && !quoted) { quoted = true; }
-                else if (c == '\n') { quoted = false; }
-            }
+            temp = CountCommas(s);
             if (temp != bounds1) { return -2; }
         }
 
         return bounds1;
+    }
+
+    // Count the number of unquoted commas in 1 row of data
+    // e.g. you have a CSV file that has columns "days","months"
+    // "mon,tue,wed...sun","jan,feb,mar...dec" = 1 comma
+    public static int CountCommas(String in) {
+        int counter = 0;
+        boolean quoted = false;
+
+        for (char c : in.toCharArray()) {
+            if (c == ',' && !quoted) { counter++; }
+            else if (c == '"' && quoted) { quoted = false; }
+            else if (c == '"') { quoted = true; }
+        }
+
+        return counter;
     }
 
     public static List<String> ReadLines(String path) throws IOException {
@@ -90,8 +80,7 @@ public class helper {
                     }
                 }
                 else if (c == '"' && quoted) { quoted = false; }
-                else if (c == '"' && !quoted) { quoted = true; }
-                else if (c == '\n') { quoted = false; }
+                else if (c == '"') { quoted = true; }
             }
 
             if (y.equals("")) {
