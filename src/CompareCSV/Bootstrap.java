@@ -12,12 +12,30 @@ public class Bootstrap {
         List<String> raw2;
         FileWriter fw;
         boolean check_yn = false;
-        String help_suggestion = "Use 'java CompareCSV -h' for help.";
+        String help_suggestion = "Use 'java CompareCSV.Entry -h' for help.";
 
-        // TODO: print more strings to explain each argument
         // Help messages
         if (args.length > 0 && args[0].equalsIgnoreCase("-h")) {
-            System.out.println("Usage: java CompareCSV [input file 1] [input file 2] [output file] <index> <y/[n]>");
+            System.out.println("Usage:");
+            System.out.println("    java CompareCSV.Entry [input file 1] [input file 2] [output file] <index> <y/[n]>\n");
+            System.out.println("Options:");
+            System.out.println("    [input file 1], [input file 2]");
+            System.out.println("        File paths to the CSV files to be compared.\n");
+            System.out.println("    [output file]");
+            System.out.println("        File path where the results should be saved.");
+            System.out.println("        Using a path to an existing file is not allowed for safety.\n");
+            System.out.println("    <index>");
+            System.out.println("        An integer that chooses which column is compared, starting from 0 (leftmost).");
+            System.out.println("        By default, the rightmost column is chosen.\n");
+            System.out.println("    <y/[n]>");
+            System.out.println("        Whether to check if the column headers of the input files match.");
+            System.out.println("        By default, column headers are not checked.\n");
+            System.out.println("    If both optional arguments are used, <index> must come first (see example 4 below).\n");
+            System.out.println("Examples:");
+            System.out.println("    java CompareCSV.Entry input_1.csv input_2.csv resources/output.csv\n");
+            System.out.println("    java CompareCSV.Entry input_1.csv input_2.csv resources/output.csv 1\n");
+            System.out.println("    java CompareCSV.Entry input_1.csv input_2.csv resources/output.csv y\n");
+            System.out.println("    java CompareCSV.Entry input_1.csv input_2.csv resources/output.csv 0 n");
             return;
         }
 
@@ -33,24 +51,27 @@ public class Bootstrap {
             return;
         }
 
-        // TODO: Say which filepath is wrong in error message
-        // Read from input file
+        // Check file paths
         try {
-            raw1 = Helper.ReadLines(args[0]);
-            raw2 = Helper.ReadLines(args[1]);
+            // Check if output file already exists
             if (new File(args[2]).exists()) {
                 System.out.println("Output file already exists.");
                 System.out.println(help_suggestion);
                 return;
             }
+
+            // Read from input file
+            raw1 = Helper.ReadLines(args[0]);
+            raw2 = Helper.ReadLines(args[1]);
         }
-        catch (
-                IOException e) {
-            System.out.println("Invalid input filepath(s).");
+        catch (IOException e) {
+            if (new File(args[0]).exists()) { System.out.println("Input file 2 does not exist."); }
+            else { System.out.println("Input file 1 does not exist."); }
             System.out.println(help_suggestion);
             return;
         }
 
+        // Check if number of columns are the same
         int bounds = Helper.CheckBounds(raw1, raw2);
         if (bounds == -3) {
             System.out.println("Input files have different number of columns.");
@@ -58,7 +79,7 @@ public class Bootstrap {
             return;
         }
         else if (bounds < 0) {
-            System.out.printf("Incomplete row(s) in file %d%n", -bounds);
+            System.out.printf("Incomplete row(s) in file %d.%n", -bounds);
             System.out.println(help_suggestion);
             return;
         }
@@ -104,8 +125,8 @@ public class Bootstrap {
         }
 
         // Compare lines of data
-        List<String[]>in1 = Helper.SplitLines(raw1, index);
-        List<String[]>in2 = Helper.SplitLines(raw2, index);
+        List<String[]> in1 = Helper.SplitLines(raw1, index);
+        List<String[]> in2 = Helper.SplitLines(raw2, index);
         List<String> result = new ArrayList<>();
         Helper.FindExceptions(in1, in2, result);
         Helper.FindExceptions(in2, in1, result);

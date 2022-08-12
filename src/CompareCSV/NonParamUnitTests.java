@@ -26,13 +26,13 @@ public class NonParamUnitTests {
 
     @Test
     public void findExceptionsTest() {
-        List<String[]> in1 = Arrays.asList(new String[] {"1,2,3,4", ",5", ""},
-                new String[] {"6,7,8,9", ",10", ""},
-                new String[] {"11,12,13,14", ",15", ""});
+        List<String[]> in1 = Arrays.asList(new String[] {"1,2,3,4,", "5", ""},
+                new String[] {"6,7,8,9,", "10", ""},
+                new String[] {"11,12,13,14,", "15", ""});
 
-        List<String[]> in2 = Arrays.asList(new String[] {"1,2,3,4", ",5", ""},
-                new String[] {"6,7,8,9", ",0", ""},
-                new String[] {"16,17,18,19", ",20", ""});
+        List<String[]> in2 = Arrays.asList(new String[] {"1,2,3,4,", "5", ""},
+                new String[] {"6,7,8,9,", "0", ""},
+                new String[] {"16,17,18,19,", "20", ""});
 
         List<String> expected = Arrays.asList("6,7,8,9,10\n", "11,12,13,14,15\n", "6,7,8,9,0\n", "16,17,18,19,20\n");
 

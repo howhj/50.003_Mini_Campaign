@@ -12,7 +12,7 @@ import java.io.File;
 
 public class SystemTest {
     String[] args;
-    int testOutput;
+    int code;
     String output;
     List<String> expected = Arrays.asList("\"ID99\",\"BOS8059799\",\"SGD\",\"CURRENT\",\"208045\"",
             "\"ID198\",\"BOS30360198\",\"USD\",\"CURRENT\",\"679878\"",
@@ -21,9 +21,9 @@ public class SystemTest {
             "\"ID198\",\"BOS30360198\",\"USD\",\"CURRENT\",\"6798788\"",
             "\"ID298\",\"BOS50591298\",\"USD\",\"SAVINGS\",\"988459\"");
 
-    public SystemTest(String[] args, int testOutput, String output) {
+    public SystemTest(String[] args, int code, String output) {
         this.args = args;
-        this.testOutput = testOutput;
+        this.code = code;
         this.output = output;
     }
 
@@ -64,7 +64,7 @@ public class SystemTest {
                 {new String[] {file1_path, file3_path, noexist_path, "t"}, 1, ""},
                 // success
                 {new String[] {file1_path, file3_path, test4_path, "2", "y"}, 2, test4_path},
-                // unknown arg
+                // index is not int
                 {new String[] {file1_path, file3_path, noexist_path, "t", "y"}, 1, ""},
                 // unknown arg
                 {new String[] {file1_path, file3_path, noexist_path, "2", "t"}, 1, ""},
@@ -83,11 +83,11 @@ public class SystemTest {
         */
         try {
             new Bootstrap().start(this.args);
-            if (this.testOutput == 2) {
+            if (this.code == 2) {
                 List<String> actual = Helper.ReadLines(this.output);
                 assertTrue(validateList(expected, actual));
             }
-            else if (this.testOutput == 1) {
+            else if (this.code == 1) {
                 assertFalse(new File("resources/should_not_exist.csv").exists());
             }
         }

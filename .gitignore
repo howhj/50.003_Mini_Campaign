@@ -1,4 +1,8 @@
 sample_file_?.csv
 stuff/*
-compareCSV/*.class
+CompareCSV/*.class
 resources/test*
+out/*
+src/CompareCSV/FuzzTest.java
+resources/input_*.csv
+resources/output_*.csv

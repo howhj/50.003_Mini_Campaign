@@ -6,7 +6,6 @@ import java.io.IOException;
 import java.util.List;
 import java.util.ArrayList;
 
-// TODO: use switch case
 public class Helper {
     // Check number of columns by counting the number of unquoted commas
     public static int CheckBounds(List<String> in1, List<String> in2) {
@@ -32,9 +31,11 @@ public class Helper {
         return bounds1;
     }
 
-    // Count the number of unquoted commas in 1 row of data
-    // e.g. you have a CSV file that has columns "days","months"
-    // "mon,tue,wed...sun","jan,feb,mar...dec" = 1 comma
+    /*
+    Count the number of unquoted commas in 1 row of data
+    e.g. you have a CSV file that has columns "days","months"
+    "mon,tue,wed...sun","jan,feb,mar...dec" = 1 comma
+    */
     public static int CountCommas(String in) {
         int counter = 0;
         boolean quoted = false;
@@ -52,10 +53,10 @@ public class Helper {
         return Files.readAllLines(Paths.get(path));
     }
 
+    // Split each line into 3 parts: the unique combination (x,z) and the data to compare (y)
     public static List<String[]> SplitLines(List<String> in, int index) {
         List<String[]> out = new ArrayList<>();
 
-        // Split each line into 3 parts: the unique combination (x,z) and the data to compare (y)
         for (String s : in) {
             int lower = 0;
             int upper = 0;
@@ -93,6 +94,7 @@ public class Helper {
         return out;
     }
 
+    // Find all mismatched lines in in1 with respect to in2
     public static void FindExceptions(List<String[]> in1, List<String[]> in2, List<String> out) {
         for (String[] arr1 : in1) {
             boolean found = false;
