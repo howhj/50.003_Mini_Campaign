@@ -21,5 +21,10 @@ Replace `[input csv 1]`, `[input csv 2]`, `[output csv]` with your own file path
 
 For help, you can run `java CompareCSV.Entry -h`.
 
+## Testing
+To run the test files, import this project to your IDE and run the test files from there. I personally use [IntelliJ community edition](https://www.jetbrains.com/idea/download/), so the test files should run on it without issue.
+
+For fuzzing, [Python](https://www.python.org/downloads/) is used to write the fuzzer. Run `python resources/fuzzer.py` to generate FuzzTest.java (which is the test file to be run) and multiple CSV files like input_1a.csv and input_1b.csv (containing random data).
+
 ## Use case diagram
 ![Use case diagram](use_case_diagram.jpg)
