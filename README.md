@@ -9,9 +9,8 @@ This is a simple program to compare two CSV files line by line and check for exc
 
 ## Usage
 1. Install the [Java Development Kit](https://www.oracle.com/java/technologies/downloads/).
-2. Download the [Junit jar file](https://mvnrepository.com/artifact/junit/junit).
-3. In a terminal, run `javac -d . -cp target:path/to/junit.jar src/CompareCSV/*.java` to compile the java file.
-4. Then, run `java CompareCSV.Entry [input csv 1] [input csv 2] [output csv] <i> <y/[n]>`.
+2. In a terminal, run `javac -d . src/CompareCSV/Bootstrap.java src/CompareCSV/Entry.java src/CompareCSV/Helper.java` to compile the java files.
+3. Then, run `java CompareCSV.Entry [input csv 1] [input csv 2] [output csv] <i> <y/[n]>`.
 
 Replace `[input csv 1]`, `[input csv 2]`, `[output csv]` with your own file paths. This will compare the two input CSV files and write the exceptions to the output CSV file. To prevent overwrites, the output filepath will be rejected if it corresponds to an existing file.
 
