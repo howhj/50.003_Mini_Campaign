@@ -1,5 +1,6 @@
-# 50003 Mini-Campaign
-By: Jaron Ho (1005011)
+# 50.003 Mini-Campaign
+
+An individual project for 50.003, where the goal was to make a CSV comparison program and test it in various ways.
 
 ## Purpose
 This is a simple program to compare two CSV files line by line and check for exceptions. An exception means either of the following:
